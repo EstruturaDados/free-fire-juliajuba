@@ -21,7 +21,8 @@ int main(void) {
         printf("1. Adicionar item\n");
         printf("2. Remover item por nome\n");
         printf("3. Listar itens\n");
-        printf("4. Sair\n");
+        printf("4. Buscar item por nome\n");
+        printf("5. Sair\n");
         printf("Escolha uma opção: ");
         if (scanf("%d", &choice) != 1) {
             int c;
@@ -89,14 +90,40 @@ int main(void) {
                 }
                 break;
 
-            case 4:
+            case 4: {
+                if (count == 0) {
+                    printf("Mochila vazia.\n");
+                } else {
+                    char query[NAME_LEN];
+                    printf("Digite o nome do item a buscar: ");
+                    scanf(" %49[^\n]", query);
+                    int found = -1;
+                    for (int i = 0; i < count; i++) {
+                        if (strcmp(bag[i].name, query) == 0) {
+                            found = i;
+                            break;
+                        }
+                    }
+                    if (found == -1) {
+                        printf("Item '%s' não encontrado.\n", query);
+                    } else {
+                        printf("\nItem encontrado:\n");
+                        printf("Nome: %s\n", bag[found].name);
+                        printf("Tipo: %s\n", bag[found].type);
+                        printf("Quantidade: %d\n", bag[found].quantity);
+                    }
+                }
+                break;
+            }
+
+            case 5:
                 printf("Saindo...\n");
                 break;
 
             default:
                 printf("Opção inválida.\n");
         }
-    } while (choice != 4);
+    } while (choice != 5);
 
     return 0;
 }
